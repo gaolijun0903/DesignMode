@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<title>包装明星--封装</title>
+</head>
+<body>
+	<script>
+		//利用闭包实现
+		var Book = (function(){
+			//静态私有属性、方法
+			var bookNum = 0,checkBook = function(name){};
+			//创建类
+			function _book (newId,newName,newPrize){
+				//判断执行过程中this是否是当前这个对象（如果是，说明是new创建的）
+				if(this instanceof _book){
+					console.log(1)
+					//私有属性、方法
+					var name,prize,checkId = function(){};
+					//特权方法
+					this.getName = function(){
+						console.log(this.name);
+					};
+					this.getPrize = function(){};
+					this.setName = function(n){
+						this.name = n;
+					};
+					this.setPrize = function(p){
+						this.prize = p;
+					};
+					//共有属性、方法
+					this.id = newId;
+					this.copy = function(){};
+					bookNum++;
+					if(bookNum>=100){
+						throw new Error('我们仅出版100本书！');
+					}
+					//构造器
+					this.setName(newName);
+					this.setPrize(newPrize);
+				}else{
+					console.log(2)
+					return new _book(newId,newName,newPrize)
+				}
+			}
+			//构建原型
+			_book.prototype = {
+				//静态共有属性、方法
+				isJSBook : false,
+				display : function(){}
+			}
+			//返回类
+			return _book;
+		})();
+		
+		//两种调用方式均可正确返回
+		//1.不使用new关键字创建
+		var book1 = Book(11,'js设计模式',50);
+		book1.getName();
+		//2.使用new关键字创建
+		var book2 = new Book(21,'js设计模式-高级',80);
+		book2.getName();
+		
+	</script>
+</body>
+</html>

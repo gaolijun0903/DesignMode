@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<title>灵活的语言--JavaScript</title>
+</head>
+<body>
+	<script>
+		/*
+		Function.prototype.addMethods = function(name,fn){
+			this[name] = fn;
+			return this;
+		}
+		var methods = new Function();
+		methods.addMethods('checkName',function(){
+			console.log('验证姓名');
+			return this;
+		}).addMethods('checkMail',function(){
+			console.log('验证邮箱');
+			return this;
+		})
+		methods.checkName().checkMail();
+		*/
+		
+		
+		Function.prototype.addMethods = function(name,fn){
+			this.prototype[name] = fn;
+			return this;
+		}
+		var Methods = new Function();
+		Methods.addMethods('checkName',function(){
+			console.log('验证姓名');
+			return this;
+		}).addMethods('checkMail',function(){
+			console.log('验证邮箱');
+			return this;
+		})
+		
+		var m = new Methods();
+		m.checkName().checkMail();
+		
+//		Methods.checkName();
+		
+		/*Methods.prototype.checkName = function(){
+			console.log('验证姓名')
+		}*/
+		
+		
+	</script>
+</body>
+</html>
